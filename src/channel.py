@@ -9,10 +9,16 @@ YOUTUBE = build('youtube', 'v3', developerKey=API_KEY)
 class Channel:
     """Класс для ютуб-канала"""
 
-    def __init__(self, channel_id: str) -> None:
-        """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel = YOUTUBE.channels().list(id=channel_id, part='snippet,statistics').execute()
+    def __init__(self, channel_id: str):
+        self.channel_id = channel_id
 
-    def print_info(self) -> None:
-        """Выводит в консоль информацию о канале."""
-        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
+    def get_info(self):
+        response = YOUTUBE.channels().list(
+            id=self.channel_id,
+            part='snippet,statistics'
+        ).execute()
+        return response
+
+    def print_info(self):
+        response = self.get_info()
+        print(json.dumps(response, indent=2, ensure_ascii=False))
