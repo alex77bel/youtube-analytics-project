@@ -14,9 +14,33 @@ class Channel:
         self.__title: str = response['items'][0]['snippet']['title']  # название канала
         self.__description: str = response['items'][0]['snippet']['description']  # описание канала
         self.__url: str = 'https://www.youtube.com/channel/' + channel_id  # ссылка на канал
-        self.__subscribers: int = response['items'][0]['statistics']['subscriberCount']  # количество подписчиков
-        self.__video_count: int = response['items'][0]['statistics']['videoCount']  # количество видео
-        self.__view_count: int = response['items'][0]['statistics']['viewCount']  # общее количество просмотров
+        self.__subscribers: int = int(response['items'][0]['statistics']['subscriberCount'])  # количество подписчиков
+        self.__video_count: int = int(response['items'][0]['statistics']['videoCount'])  # количество видео
+        self.__view_count: int = int(response['items'][0]['statistics']['viewCount'])  # общее количество просмотров
+
+    def __str__(self) -> str:
+        return f'{self.__title} ({self.__url})'
+
+    def __sub__(self, other) -> int:
+        return self.__subscribers - other.__subscribers
+
+    def __add__(self, other) -> int:
+        return self.__subscribers + other.__subscribers
+
+    def __eq__(self, other) -> bool:
+        return self.__subscribers == other.__subscribers
+
+    def __lt__(self, other) -> bool:
+        return self.__subscribers < other.__subscribers
+
+    def __le__(self, other) -> bool:
+        return self.__subscribers <= other.__subscribers
+
+    def __gt__(self, other) -> bool:
+        return self.__subscribers > other.__subscribers
+
+    def __ge__(self, other) -> bool:
+        return self.__subscribers >= other.__subscribers
 
     @classmethod
     def get_service(cls):  # возвращает объект для работы с YouTube API
