@@ -13,11 +13,11 @@ class Video:
         self.video_id: str = video_id  # id видео
         try:
             self.title: str = response['items'][0]['snippet']['title']  # название видео
-            self.__url: str = 'https://youtu.be/' + video_id  # ссылка на канал
+            self.url: str = 'https://youtu.be/' + video_id  # ссылка на канал
             self.view_count: int = int(response['items'][0]['statistics']['viewCount'])  # количество просмотров
             self.like_count: int = int(response['items'][0]['statistics']['likeCount'])  # количество лайков
         except IndexError:
-            self.title = self.__url = self.view_count = self.like_count = None
+            self.title = self.url = self.view_count = self.like_count = None
 
     def __str__(self) -> str:
         return f'{self.title}'
